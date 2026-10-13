@@ -20,3 +20,7 @@ $package = json_decode((string)file_get_contents(dirname(__DIR__, 2) . '/compose
 foreach ($package['autoload']['psr-4'] as $prefix => $path) {
     $loader->addPsr4($prefix, dirname(__DIR__, 2) . '/' . $path, true);
 }
+// The interface the DI compile generates: declared here with core's shape when no generated code exists.
+if (!interface_exists(\Magento\GraphQl\Model\Query\ContextExtensionInterface::class)) {
+    require __DIR__ . '/generated/ContextExtensionInterface.php';
+}

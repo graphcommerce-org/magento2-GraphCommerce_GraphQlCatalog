@@ -20,3 +20,7 @@ the aggregation instead of an `attributesList` query.
   providers. GraphCommerce_CatalogStorefrontGraphQl serves it from the attribute documents.
 - [`Model/OptionSwatch`](Model/OptionSwatch.php) is the key under which an option carries its
   swatch for GraphCommerce_GraphQlCatalogSwatches.
+- [`Model/ActiveFilters`](Model/ActiveFilters.php) holds the filter argument of every products
+  field of the request by its response key
+  ([`Plugin/Resolver/ActiveFiltersFromProducts`](Plugin/Resolver/ActiveFiltersFromProducts.php)),
+  for a nested field that follows it.

@@ -1,0 +1,6 @@
+type ConfigurableProduct {
+    configurable_product_options_selection(
+        configurableOptionValueUids: [ID!]
+        followFilters: Boolean = false @doc(description: "Select the values the filter of the products query names: every super attribute the filter limits to one value, when a salable variant carries all of them. A uid in configurableOptionValueUids takes precedence for its attribute.")
+    ): ConfigurableProductOptionsSelection
+}

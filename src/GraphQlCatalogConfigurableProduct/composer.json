@@ -1,0 +1,21 @@
+{
+    "name": "graphcommerce/module-graph-ql-catalog-configurable-product",
+    "description": "A configurable option selection that follows the filter of the products query, for any Magento store",
+    "type": "magento2-module",
+    "license": "MIT",
+    "require": {
+        "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0",
+        "magento/framework": "*",
+        "magento/module-configurable-product": "*",
+        "magento/module-configurable-product-graph-ql": "*",
+        "graphcommerce/module-graph-ql-catalog": "self.version"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "GraphCommerce\\GraphQlCatalogConfigurableProduct\\": ""
+        }
+    }
+}

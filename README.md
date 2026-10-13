@@ -10,6 +10,7 @@ reads the frontend input and the swatches of a filter from the listing query.
 | `ProductInterface.custom_attributeV2(attribute_code)` | `GraphQlCatalog` | The entry of `custom_attributesV2` with that code, or null |
 | `AttributeValueInterface.attribute`, `Aggregation.attribute` | `GraphQlCatalog` | The attribute metadata, as `customAttributeMetadataV2` returns it; null for a category aggregation |
 | `swatch` on `AggregationOptionInterface`, `CustomAttributeOptionInterface`, `AttributeSelectedOptionInterface` | `GraphQlCatalogSwatches` | The `SwatchDataInterface` of an option of a swatch attribute, or null |
+| `ConfigurableProduct.configurable_product_options_selection(followFilters)` | `GraphQlCatalogConfigurableProduct` | The selection the filter of the products query names: every super attribute the filter limits to one value, when a salable variant carries all of them |
 
 The modules answer from core's resolvers and data providers and need nothing else.
 [GraphCommerce Catalog Storefront](https://github.com/graphcommerce-org/magento2-GraphCommerce_CatalogStorefront)
@@ -19,12 +20,14 @@ requires this package and serves the same fields from its documents.
 
 ```sh
 composer require graphcommerce/magento-graphql-catalog
-bin/magento module:enable GraphCommerce_GraphQlCatalog GraphCommerce_GraphQlCatalogSwatches
+bin/magento module:enable GraphCommerce_GraphQlCatalog GraphCommerce_GraphQlCatalogSwatches \
+    GraphCommerce_GraphQlCatalogConfigurableProduct
 bin/magento setup:upgrade
 ```
 
-`GraphCommerce_GraphQlCatalogSwatches` needs Magento_SwatchesGraphQl. A store without swatches
-leaves it disabled.
+`GraphCommerce_GraphQlCatalogSwatches` needs Magento_SwatchesGraphQl and
+`GraphCommerce_GraphQlCatalogConfigurableProduct` needs Magento_ConfigurableProductGraphQl. A store
+without them leaves the module disabled.
 
 ## Modules
 
@@ -32,6 +35,7 @@ leaves it disabled.
 | --- | --- |
 | [`GraphQlCatalog`](src/GraphQlCatalog) | `custom_attributeV2`, the `attribute` of a value and an aggregation, the option swatch key |
 | [`GraphQlCatalogSwatches`](src/GraphQlCatalogSwatches) | The `swatch` fields from core's swatch helper |
+| [`GraphQlCatalogConfigurableProduct`](src/GraphQlCatalogConfigurableProduct) | `followFilters` on the configurable option selection |
 
 ## Extension point
 
@@ -40,6 +44,11 @@ An option array carries its swatch under
 stored swatch (type and value) whose thumbnail URL the swatch field builds. A module that
 builds option arrays itself puts the swatch there, and the core plugins keep it. An aggregation
 plugin that fills the key takes a sort order below 20, so it runs before the core plugin.
+
+[`ActiveFilters`](src/GraphQlCatalog/Model/ActiveFilters.php) holds the filter of every products
+field of the request and turns it into a configurable option selection over the values of the
+salable variants a resolver passes. A selection plugin that serves from another store takes a
+sort order below 20, so the core plugin runs only when it hands over to core.
 
 ## Development
 

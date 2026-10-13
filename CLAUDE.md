@@ -8,6 +8,10 @@ depends only on the core modules it plugs into.
   unfiltered `custom_attributesV2` list), the `attribute` of an attribute value and of an
   aggregation (core's attribute data providers; a category aggregation answers null), and
   `Model/OptionSwatch::KEY`.
+- `GraphQlCatalogConfigurableProduct`: `followFilters` on `configurable_product_options_selection`.
+  `GraphQlCatalog/Model/ActiveFilters` keeps the filter of every products field by response key and
+  turns it into a selection over the salable variants; `Plugin/Resolver/OptionsSelectionFollowsFilters`
+  (sort order 20) hands core's resolver the uids. A uid the query passes wins for its attribute.
 - `GraphQlCatalogSwatches`: the `swatch` field on aggregation, attribute and selected options.
   `Model/Resolver/SwatchData` reads the swatch under the key and builds the thumbnail URL of a
   stored image swatch; `Plugin/Output/*` and `Plugin/Layer/AggregationSwatches` fill the key from

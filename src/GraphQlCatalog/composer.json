@@ -1,0 +1,22 @@
+{
+    "name": "graphcommerce/module-graph-ql-catalog",
+    "description": "One custom attribute by code and the attribute metadata of a value and an aggregation in the catalog GraphQL schema, for any Magento store",
+    "type": "magento2-module",
+    "license": "MIT",
+    "require": {
+        "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0",
+        "magento/framework": "*",
+        "magento/module-catalog": "*",
+        "magento/module-catalog-graph-ql": "*",
+        "magento/module-eav": "*",
+        "magento/module-eav-graph-ql": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "GraphCommerce\\GraphQlCatalog\\": ""
+        }
+    }
+}

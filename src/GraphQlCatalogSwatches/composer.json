@@ -1,0 +1,25 @@
+{
+    "name": "graphcommerce/module-graph-ql-catalog-swatches",
+    "description": "The swatch of an aggregation option, an attribute option and a selected option in the catalog GraphQL schema, for any Magento store",
+    "type": "magento2-module",
+    "license": "MIT",
+    "require": {
+        "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0",
+        "magento/framework": "*",
+        "magento/module-catalog": "*",
+        "magento/module-catalog-graph-ql": "*",
+        "magento/module-eav": "*",
+        "magento/module-eav-graph-ql": "*",
+        "magento/module-swatches": "*",
+        "magento/module-swatches-graph-ql": "*",
+        "graphcommerce/module-graph-ql-catalog": "self.version"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "GraphCommerce\\GraphQlCatalogSwatches\\": ""
+        }
+    }
+}

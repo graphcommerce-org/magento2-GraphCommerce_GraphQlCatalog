@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # The latest Mage-OS release, from the graycore actions.
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.supported-version.outputs.matrix }}
+    steps:
+      - uses: graycoreio/github-actions-magento2/supported-version@v8.10.0
+        id: supported-version
+        with:
+          project: mage-os
+          kind: latest
+
+  # The resolvers and plugins against mocked core classes. Needs a Magento vendor directory for the
+  # autoloader; setup:install is not run. PHPUnit runs from its phar: the Magento composer.json
+  # excludes every Test directory from the classmap, which drops PHPUnit's own event classes.
+  unit:
+    needs: matrix
+    strategy:
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: graycoreio/github-actions-magento2/setup-magento@v8.10.0
+        id: magento
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v${{ matrix.composer }}
+          mode: extension
+          magento_version: ${{ matrix.magento }}
+          magento_repository: https://repo.mage-os.org/
+      - name: Install this package into the Magento project
+        working-directory: ${{ steps.magento.outputs.path }}
+        env:
+          COMPOSER_MIRROR_PATH_REPOS: 1
+        run: |
+          composer config repositories.package path '${{ github.workspace }}'
+          composer config minimum-stability dev
+          composer config prefer-stable true
+          composer require --no-update graphcommerce/magento-graphql-catalog:'@dev'
+          composer install --no-interaction --no-progress
+      - name: Unit tests
+        run: |
+          curl -sSL -o phpunit.phar https://phar.phpunit.de/phpunit-12.phar
+          MAGENTO_ROOT=${{ steps.magento.outputs.path }} php phpunit.phar -c phpunit.xml.dist

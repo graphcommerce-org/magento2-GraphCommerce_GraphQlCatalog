@@ -1,0 +1,31 @@
+{
+    "name": "graphcommerce/magento-graphql-catalog",
+    "description": "Catalog GraphQL fields for Magento 2 / Mage-OS: one custom attribute by code, the attribute metadata of a value and an aggregation, and the swatch of every option. One package with every module; each module directory is a package of its own for a subtree split.",
+    "type": "magento2-module",
+    "license": "MIT",
+    "require": {
+        "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0",
+        "magento/framework": "*",
+        "magento/module-catalog": "*",
+        "magento/module-catalog-graph-ql": "*",
+        "magento/module-eav": "*",
+        "magento/module-eav-graph-ql": "*"
+    },
+    "replace": {
+        "graphcommerce/module-graph-ql-catalog": "self.version",
+        "graphcommerce/module-graph-ql-catalog-swatches": "self.version"
+    },
+    "suggest": {
+        "magento/module-swatches-graph-ql": "GraphCommerce_GraphQlCatalogSwatches serves the swatch of an aggregation option, an attribute option and a selected option"
+    },
+    "autoload": {
+        "files": [
+            "src/GraphQlCatalog/registration.php",
+            "src/GraphQlCatalogSwatches/registration.php"
+        ],
+        "psr-4": {
+            "GraphCommerce\\GraphQlCatalog\\": "src/GraphQlCatalog/",
+            "GraphCommerce\\GraphQlCatalogSwatches\\": "src/GraphQlCatalogSwatches/"
+        }
+    }
+}

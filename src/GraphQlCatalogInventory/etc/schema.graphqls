@@ -1,0 +1,16 @@
+interface ProductInterface {
+    stock_sources: [ProductStockSource!]! @doc(description: "The quantity of the product in each enabled source of the stock of the website, in source priority order.") @resolver(class: "GraphCommerce\\GraphQlCatalogInventory\\Model\\Resolver\\StockSources")
+}
+
+type ProductStockSource @doc(description: "The physical quantity of a product in one source. Reservations count on the stock only, so the quantity is not the salable quantity.") {
+    source_code: String!
+    name: String!
+    quantity: Float!
+    in_stock: Boolean! @doc(description: "The source item status.")
+    is_pickup_location: Boolean! @doc(description: "The source is an active in-store pickup location.")
+    latitude: Float
+    longitude: Float
+    postcode: String
+    city: String
+    country_code: String
+}

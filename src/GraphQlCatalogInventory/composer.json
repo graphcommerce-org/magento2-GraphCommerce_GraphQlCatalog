@@ -1,0 +1,21 @@
+{
+    "name": "graphcommerce/module-graph-ql-catalog-inventory",
+    "description": "The physical quantity of a product per source of the website's stock in the catalog GraphQL schema, for any Magento store with MSI",
+    "type": "magento2-module",
+    "license": "MIT",
+    "require": {
+        "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0",
+        "magento/framework": "*",
+        "magento/module-catalog-graph-ql": "*",
+        "magento/module-inventory-api": "*",
+        "magento/module-inventory-sales-api": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "GraphCommerce\\GraphQlCatalogInventory\\": ""
+        }
+    }
+}

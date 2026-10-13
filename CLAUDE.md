@@ -12,6 +12,9 @@ depends only on the core modules it plugs into.
   `GraphQlCatalog/Model/ActiveFilters` keeps the filter of every products field by response key and
   turns it into a selection over the salable variants; `Plugin/Resolver/OptionsSelectionFollowsFilters`
   (sort order 20) hands core's resolver the uids. A uid the query passes wins for its attribute.
+- `GraphQlCatalogInventory`: `ProductInterface.stock_sources`, the source items of the enabled sources
+  of the website's stock in priority order, from MSI's services in one batch per request. The
+  quantity is physical: reservations count on the stock only.
 - `GraphQlCatalogSwatches`: the `swatch` field on aggregation, attribute and selected options.
   `Model/Resolver/SwatchData` reads the swatch under the key and builds the thumbnail URL of a
   stored image swatch; `Plugin/Output/*` and `Plugin/Layer/AggregationSwatches` fill the key from
